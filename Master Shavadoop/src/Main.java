@@ -12,10 +12,9 @@ public class Main {
         @SuppressWarnings("CallToPrintStackTrace")
 	public static void main(String[] args) {		
 		try {
-			File file = new File(args[0]);
+			File file = new File("../" + args[0]);
 			BufferedReader fbr = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
 			String line;
-			String s;
 			/*while ((name = fbr.readLine()) != null){
 				String[] cmdline = {"sh", "-c", "ssh trouffignac@" + name + " echo \"OK\""};
 				Process p = new ProcessBuilder(cmdline).start();				
