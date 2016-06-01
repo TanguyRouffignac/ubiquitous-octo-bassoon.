@@ -13,9 +13,7 @@ public class Main {
 	public static void main(String[] args) {		
 		try {
 			File file = new File(args[0]);
-			File output = new File("Responding");
 			BufferedReader fbr = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
-			PrintWriter fbw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(output))));
 			String line;
 			String s;
 			/*while ((name = fbr.readLine()) != null){
@@ -26,11 +24,15 @@ public class Main {
 					if (s.equals("OK"))						
 						fbw.println(name);
 			}*/
+                        int number = 1;
                         while ((line = fbr.readLine()) != null){
-                            System.out.println(line);
+                            File output = new File("../S/S" + number);
+                            PrintWriter fbw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(output))));
+                            fbw.write(line);
+                            fbw.close();
+                            number ++;
                         }
 			fbr.close();
-			fbw.close();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
