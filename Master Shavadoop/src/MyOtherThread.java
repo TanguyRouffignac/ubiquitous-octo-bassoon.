@@ -2,6 +2,7 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -13,27 +14,32 @@ import java.util.ArrayList;
  *
  * @author tanguy
  */
-public class MyThread extends Thread{
+public class MyOtherThread extends Thread{
     final private String name;
+    final private String key;
     final private int number;
-    ArrayList<String> keys;
+    final HashMap<String, ArrayList<Integer>> map;
     
-    public MyThread(String name, int number, ArrayList<String> keys){
+    public MyOtherThread(String name, String key, int number, HashMap<String, ArrayList<Integer>> map){
         this.name = name;
+        this.key = key;
         this.number = number;
-        this.keys = keys;
+        this.map = map;
     }
     
     @Override
     public void run(){
         try {
             String s;
-            String[] cmdline = {"sh", "-c", "ssh trouffignac@" + name + " java -jar SLR207/Slave_Shavadoop.jar Sx" + number};
+            String command = "ssh trouffignac@" + name + " java -jar SLR207/Slave_Shavadoop.jar UMx " + key + " " + number;
+            for(int i = 0 ; i < map.get(key).size() ; i ++)
+                command = command + " " + map.get(key).get(i);
+            String[] cmdline = {"sh", "-c", command};
             ProcessBuilder pb = new ProcessBuilder(cmdline);
             Process p = pb.start();
             BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
             while ((s = br.readLine()) != null){
-                keys.add(s);
+                System.out.println(s);
             }
         } catch (Exception e) {
             e.printStackTrace();

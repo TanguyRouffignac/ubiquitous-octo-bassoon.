@@ -54,6 +54,7 @@ public class Main {
 			for(int i = 0 ; i < number ; i ++){
                             name = fbr2.readLine();
                             if(name == null){
+                                fbr2.close();
                                 fbr2 = new BufferedReader(new InputStreamReader(new FileInputStream(output)));
                                 name = fbr2.readLine();
                             }
@@ -81,18 +82,23 @@ public class Main {
                                 }
                             }
                         }
-                        Iterator it = machines.entrySet().iterator();
+                        fbr.close();
+                        ArrayList<Thread> otherThreads = new ArrayList<>();
+                        Iterator it = dico.entrySet().iterator();
+                        int i = 0;
                         while (it.hasNext()) {
                             Map.Entry pair = (Map.Entry)it.next();
                             System.out.println(pair.getKey() + " = " + pair.getValue());
+                            name = fbr2.readLine();
+                            if(name == null){
+                                fbr2.close();
+                                fbr2 = new BufferedReader(new InputStreamReader(new FileInputStream(output)));
+                                name = fbr2.readLine();
+                            }
+                            MyOtherThread t = new MyOtherThread(name, (String)pair.getKey(), i, dico);
                             it.remove(); // avoids a ConcurrentModificationException
+                            i ++;
                         }
-                        it = dico.entrySet().iterator();
-                        while (it.hasNext()) {
-                            Map.Entry pair = (Map.Entry)it.next();
-                            System.out.println(pair.getKey() + " = " + pair.getValue());
-                            it.remove(); // avoids a ConcurrentModificationException
-                        }  
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
