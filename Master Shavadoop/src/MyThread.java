@@ -1,6 +1,7 @@
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -15,10 +16,12 @@ import java.io.InputStreamReader;
 public class MyThread extends Thread{
     final private String name;
     final private int number;
+    ArrayList<String> keys;
     
-    public MyThread(String name, int number){
+    public MyThread(String name, int number, ArrayList<String> keys){
         this.name = name;
         this.number = number;
+        this.keys = keys;
     }
     
     @Override
@@ -30,7 +33,7 @@ public class MyThread extends Thread{
             Process p = pb.start();
             BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
             while ((s = br.readLine()) != null){
-                System.out.println(s);
+                keys.add(s);
             }
         } catch (Exception e) {
             e.printStackTrace();

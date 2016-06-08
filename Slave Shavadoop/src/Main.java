@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 public class Main {
 
@@ -18,8 +19,20 @@ public class Main {
 			PrintWriter fbw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(output))));
 			String line = fbr.readLine();
                         String str[] = line.split(" ");
+                        ArrayList<String> keys = new ArrayList<>();
                         for(String s : str){
                             fbw.println(s + " 1");
+                            int found = 0;
+                            for(String k : keys){
+                                if (k.equals(s)){
+                                    found = 1;
+                                    break;
+                                }
+                            }
+                            if (found == 0){
+                                keys.add(s);
+                                System.out.println(s);
+                            }
                         }
 			fbr.close();
                         fbw.close();

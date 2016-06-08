@@ -41,6 +41,7 @@ public class Main {
                         }
 			fbr.close();
                         ArrayList<Thread> threads = new ArrayList<>();
+                        ArrayList<ArrayList<String>> keys = new ArrayList<>();
 			fbr.close();
 			fbw.close();
 			BufferedReader fbr2 = new BufferedReader(new InputStreamReader(new FileInputStream(new File("actives"))));
@@ -50,7 +51,7 @@ public class Main {
                                 fbr2 = new BufferedReader(new InputStreamReader(new FileInputStream(output)));
                                 name = fbr2.readLine();
                             }
-                            MyThread thread = new MyThread(name, i);
+                            MyThread thread = new MyThread(name, i, keys.get(i));
                             threads.add(thread);
                             thread.start();
 			}
