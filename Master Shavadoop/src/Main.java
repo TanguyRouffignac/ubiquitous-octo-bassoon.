@@ -44,6 +44,7 @@ public class Main {
                         }
 			fbr.close();
                         ArrayList<Thread> threads = new ArrayList<>();
+                        HashMap<Integer, String> machines = new HashMap<>();
                         ArrayList<ArrayList<String>> keys = new ArrayList<>();
                         for(int i = 0 ; i < number ; i ++)
                             keys.add(new ArrayList<String>());
@@ -57,6 +58,7 @@ public class Main {
                                 name = fbr2.readLine();
                             }
                             MyThread thread = new MyThread(name, i, keys.get(i));
+                            machines.put(i, name);
                             threads.add(thread);
                             thread.start();
 			}
@@ -79,13 +81,18 @@ public class Main {
                                 }
                             }
                         }
-                        Iterator it = dico.entrySet().iterator();
+                        Iterator it = machines.entrySet().iterator();
                         while (it.hasNext()) {
                             Map.Entry pair = (Map.Entry)it.next();
                             System.out.println(pair.getKey() + " = " + pair.getValue());
                             it.remove(); // avoids a ConcurrentModificationException
                         }
-                           
+                        it = dico.entrySet().iterator();
+                        while (it.hasNext()) {
+                            Map.Entry pair = (Map.Entry)it.next();
+                            System.out.println(pair.getKey() + " = " + pair.getValue());
+                            it.remove(); // avoids a ConcurrentModificationException
+                        }  
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
