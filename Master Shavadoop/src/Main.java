@@ -7,6 +7,9 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 public class Main {
 
@@ -42,6 +45,8 @@ public class Main {
 			fbr.close();
                         ArrayList<Thread> threads = new ArrayList<>();
                         ArrayList<ArrayList<String>> keys = new ArrayList<>();
+                        for(int i = 0 ; i < number ; i ++)
+                            keys.add(new ArrayList<String>());
 			fbr.close();
 			fbw.close();
 			BufferedReader fbr2 = new BufferedReader(new InputStreamReader(new FileInputStream(new File("actives"))));
@@ -59,7 +64,28 @@ public class Main {
 			for (Thread t : threads){
 				t.join();
 			}
-                        System.out.println("Done");
+                        HashMap<String, ArrayList<Integer>> dico = new HashMap<>();
+                        for(int i = 0 ; i < number ; i ++){
+                            for(String key : keys.get(i)){
+                                if(dico.get(key) == null){
+                                    ArrayList<Integer> val = new ArrayList<>();
+                                    val.add(i);
+                                    dico.put(key, val);
+                                }
+                                else {
+                                    ArrayList<Integer> val = dico.get(key);
+                                    val.add(i);
+                                    dico.put(key, val);
+                                }
+                            }
+                        }
+                        Iterator it = dico.entrySet().iterator();
+                        while (it.hasNext()) {
+                            Map.Entry pair = (Map.Entry)it.next();
+                            System.out.println(pair.getKey() + " = " + pair.getValue());
+                            it.remove(); // avoids a ConcurrentModificationException
+                        }
+                           
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
