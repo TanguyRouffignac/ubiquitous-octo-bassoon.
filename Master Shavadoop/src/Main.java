@@ -84,11 +84,12 @@ public class Main {
                         }
                         fbr.close();
                         ArrayList<Thread> otherThreads = new ArrayList<>();
-                        Iterator it = dico.entrySet().iterator();
+                        HashMap<String, ArrayList<Integer>> copy = new HashMap<>();
+                        copy.putAll(dico);
+                        Iterator it = copy.entrySet().iterator();
                         int i = 0;
                         while (it.hasNext()) {
                             Map.Entry pair = (Map.Entry)it.next();
-                            System.out.println(pair.getKey() + " = " + pair.getValue());
                             name = fbr2.readLine();
                             if(name == null){
                                 fbr2.close();
@@ -96,9 +97,15 @@ public class Main {
                                 name = fbr2.readLine();
                             }
                             MyOtherThread t = new MyOtherThread(name, (String)pair.getKey(), i, dico);
+                            otherThreads.add(t);
+                            t.start();
                             it.remove(); // avoids a ConcurrentModificationException
                             i ++;
                         }
+                        for (Thread t : otherThreads){
+				t.join();
+			}
+                        System.out.println("FIN");
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

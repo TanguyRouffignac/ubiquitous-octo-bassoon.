@@ -31,7 +31,7 @@ public class MyOtherThread extends Thread{
     public void run(){
         try {
             String s;
-            String command = "ssh trouffignac@" + name + " java -jar SLR207/Slave_Shavadoop.jar UMx " + key + " " + number;
+            String command = "ssh trouffignac@" + name + " java -jar SLR207/Slave_Shavadoop.jar UMx " + key + " " + number + " " + map.get(key).size();
             for(int i = 0 ; i < map.get(key).size() ; i ++)
                 command = command + " " + map.get(key).get(i);
             String[] cmdline = {"sh", "-c", command};

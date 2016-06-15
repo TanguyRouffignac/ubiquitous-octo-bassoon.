@@ -28,7 +28,7 @@ public class MyThread extends Thread{
     public void run(){
         try {
             String s;
-            String[] cmdline = {"sh", "-c", "ssh trouffignac@" + name + " java -jar SLR207/Slave_Shavadoop.jar Sx" + number};
+            String[] cmdline = {"sh", "-c", "ssh trouffignac@" + name + " java -jar SLR207/Slave_Shavadoop.jar Sx " + number};
             ProcessBuilder pb = new ProcessBuilder(cmdline);
             Process p = pb.start();
             BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
