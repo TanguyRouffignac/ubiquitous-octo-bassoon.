@@ -84,9 +84,7 @@ public class Main {
                         }
                         fbr.close();
                         ArrayList<Thread> otherThreads = new ArrayList<>();
-                        HashMap<String, ArrayList<Integer>> copy = new HashMap<>();
-                        copy.putAll(dico);
-                        Iterator it = copy.entrySet().iterator();
+                        Iterator it = dico.entrySet().iterator();
                         int i = 0;
                         while (it.hasNext()) {
                             Map.Entry pair = (Map.Entry)it.next();
@@ -99,7 +97,6 @@ public class Main {
                             MyOtherThread t = new MyOtherThread(name, (String)pair.getKey(), i, dico);
                             otherThreads.add(t);
                             t.start();
-                            it.remove(); // avoids a ConcurrentModificationException
                             i ++;
                         }
                         for (Thread t : otherThreads){
