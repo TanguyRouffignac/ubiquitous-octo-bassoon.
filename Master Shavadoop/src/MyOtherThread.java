@@ -19,6 +19,7 @@ public class MyOtherThread extends Thread{
     final private String key;
     final private int number;
     final HashMap<String, ArrayList<Integer>> map;
+    String answer;
     
     public MyOtherThread(String name, String key, int number, HashMap<String, ArrayList<Integer>> map){
         this.name = name;
@@ -39,10 +40,14 @@ public class MyOtherThread extends Thread{
             Process p = pb.start();
             BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
             while ((s = br.readLine()) != null){
-                System.out.println(s);
+                answer = s;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    public String getAnswer(){
+        return answer;
     }
 }

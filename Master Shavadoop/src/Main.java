@@ -83,9 +83,10 @@ public class Main {
                             }
                         }
                         fbr.close();
-                        ArrayList<Thread> otherThreads = new ArrayList<>();
+                        ArrayList<MyOtherThread> otherThreads = new ArrayList<>();
                         Iterator it = dico.entrySet().iterator();
                         int i = 0;
+                        HashMap<Integer, String> reduced = new HashMap<>();
                         while (it.hasNext()) {
                             Map.Entry pair = (Map.Entry)it.next();
                             name = fbr2.readLine();
@@ -96,12 +97,17 @@ public class Main {
                             }
                             MyOtherThread t = new MyOtherThread(name, (String)pair.getKey(), i, dico);
                             otherThreads.add(t);
+                            reduced.put(i, name);
                             t.start();
                             i ++;
                         }
-                        for (Thread t : otherThreads){
-				t.join();
+                        output = new File("output");
+                        fbw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(output))));
+                        for (MyOtherThread t : otherThreads){
+                            t.join();
+                            fbw.println(t.getAnswer());
 			}
+                        fbw.close();
                         System.out.println("FIN");
                     } catch (Exception e) {
                         e.printStackTrace();
