@@ -61,6 +61,7 @@ public class Main {
                 output = new File("/cal/homes/trouffignac/SLR207/RM/RM" + args[2]);
                 fbw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(output))));
                 fbw.println(key + " " + count);
+                System.out.println(key + " " + count);
                 fbw.close();
             }
         } catch (Exception e) {
