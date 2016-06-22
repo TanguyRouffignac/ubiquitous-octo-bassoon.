@@ -16,6 +16,7 @@ public class Main {
         @SuppressWarnings("CallToPrintStackTrace")
 	public static void main(String[] args) {		
 		try {
+                    long startTime = System.currentTimeMillis();
                         File file = new File("machines");
                         File output = new File("actives");
 			BufferedReader fbr = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
@@ -50,6 +51,9 @@ public class Main {
                             keys.add(new ArrayList<String>());
 			fbr.close();
 			fbw.close();
+                        long endTime = System.currentTimeMillis();
+                        System.out.println("Temps pour chercher les machines allumées : " + (endTime - startTime));
+                        startTime = System.currentTimeMillis();
 			BufferedReader fbr2 = new BufferedReader(new InputStreamReader(new FileInputStream(new File("actives"))));
 			for(int i = 0 ; i < number ; i ++){
                             name = fbr2.readLine();
@@ -83,6 +87,9 @@ public class Main {
                             }
                         }
                         fbr.close();
+                        endTime = System.currentTimeMillis();
+                        System.out.println("Temps pour map : " + (endTime - startTime));
+                        startTime = System.currentTimeMillis();
                         ArrayList<MyOtherThread> otherThreads = new ArrayList<>();
                         Iterator it = dico.entrySet().iterator();
                         int i = 0;
@@ -96,6 +103,7 @@ public class Main {
                                 name = fbr2.readLine();
                             }
                             MyOtherThread t = new MyOtherThread(name, (String)pair.getKey(), i, dico);
+                            System.out.println(name + " " + (String)pair.getKey());
                             otherThreads.add(t);
                             reduced.put(i, name);
                             t.start();
@@ -108,6 +116,8 @@ public class Main {
                             fbw.println(t.getAnswer());
 			}
                         fbw.close();
+                        endTime = System.currentTimeMillis();
+                        System.out.println("Temps pour reduce : " + (endTime - startTime));
                         System.out.println("FIN");
                     } catch (Exception e) {
                         e.printStackTrace();
