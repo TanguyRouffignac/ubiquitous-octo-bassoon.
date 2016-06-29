@@ -13,11 +13,8 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 public class Main {
 
@@ -51,7 +48,6 @@ public class Main {
                 fbw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(output))));
                 line = line.replaceAll("[^a-zA-Zéèêùàçïîûâô]", " ");
                 line = line.toLowerCase();
-                System.out.println(line);
                 fbw.println(line);
                 fbw.close();
                 number++;
