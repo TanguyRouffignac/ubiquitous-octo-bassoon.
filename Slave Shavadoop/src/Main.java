@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Main {
 
@@ -22,18 +23,26 @@ public class Main {
                 String line = fbr.readLine();
                 String str[] = line.split(" ");
                 ArrayList<String> keys = new ArrayList<>();
+                String[] forbidden = {"je", "tu", "il", "elle", "on", "nous", "vous", "ils", "elles", "le", "la", "l", "lui", "les", "nous",
+                                    "vous", "leur", "eux", "à", "dans", "par", "pour", "en", "vers", "avec", "de", "sans", "sous", "ou",
+                                    "des", "aux", "pas", "est", "que", "ii", "dont", "et", "e", "mayotted", "ne", "qui", "tous", "tout",
+                                    "ses", "du", "d", "sa", "qu", "au", "lorsqu", "a", "n", "un", "toute", "contre", "ni", "aucun", "se",
+                                    "ce", "ont", "s", "si", "sont", "iii", "son", "une", "leurs", "aucune", "celui", "cette", "ci", "hors",
+                                    "rien", "serait", "où", "sur", "soient", "sauf", "ayant", "être", "même", "tel"};
                 for (String s : str) {
-                    fbw.println(s + " 1");
-                    int found = 0;
-                    for (String k : keys) {
-                        if (k.equals(s)) {
-                            found = 1;
-                            break;
+                        if(!(Arrays.asList(forbidden).contains(s))){
+                        fbw.println(s + " 1");
+                        int found = 0;
+                        for (String k : keys) {
+                            if (k.equals(s)) {
+                                found = 1;
+                                break;
+                            }
+                        }                    
+                        if (found == 0) {
+                            keys.add(s);
+                            System.out.println(s);
                         }
-                    }
-                    if (found == 0) {
-                        keys.add(s);
-                        System.out.println(s);
                     }
                 }
                 fbr.close();

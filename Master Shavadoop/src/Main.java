@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -44,13 +45,15 @@ public class Main {
             String line;
             int number = 0;
             while ((line = fbr.readLine()) != null) {
-                output = new File("S/S" + number);
-                fbw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(output))));
                 line = line.replaceAll("[^a-zA-Zéèêùàçïîûâô]", " ");
                 line = line.toLowerCase();
-                fbw.println(line);
-                fbw.close();
-                number++;
+                if(line.split(" ").length > 0){
+                    output = new File("S/S" + number);
+                    fbw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(output))));
+                    fbw.println(line);
+                    fbw.close();
+                    number++;
+                }
             }
             fbr.close();
             ArrayList<Thread> threads = new ArrayList<>();
@@ -81,9 +84,10 @@ public class Main {
             for (Thread t : threads) {
                 t.join();
             }
+            
             HashMap<String, ArrayList<Integer>> dico = new HashMap<>();
             for (int i = 0; i < number; i++) {
-                for (String key : keys.get(i)) {
+                for (String key : keys.get(i)) {                    
                     if (dico.get(key) == null) {
                         ArrayList<Integer> val = new ArrayList<>();
                         val.add(i);
@@ -92,7 +96,7 @@ public class Main {
                         ArrayList<Integer> val = dico.get(key);
                         val.add(i);
                         dico.put(key, val);
-                    }
+                    }                    
                 }
             }
             fbr.close();
